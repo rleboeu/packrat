@@ -1,0 +1,5 @@
+name: PackRat
+main: src.PackRat
+version: 1.0
+api-version: 1.19
+commands:
