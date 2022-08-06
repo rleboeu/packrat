@@ -2,6 +2,7 @@ package src;
 
 import java.util.ArrayList;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,7 +21,11 @@ public class PackRat extends JavaPlugin {
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new PackratListener(), this);
 
-        this.getCommand("packrat").setExecutor(new CommandPackrat());
+        this.getCommand("nopickup").setExecutor(new CommandNoPickup());
+        this.getCommand("pickup").setExecutor(new CommandPickup());
+        this.getCommand("pickupall").setExecutor(new CommandPickupAll());
+        this.getCommand("pickupnone").setExecutor(new CommandPickupNone());
+        this.getCommand("pickupshow").setExecutor(new CommandPickupShow());
     }
 
     // Fired when plugin is disabled
@@ -73,6 +78,32 @@ public class PackRat extends JavaPlugin {
         if (!isPlayerRegistered(player)) {
             register.add(new PackratPlayer(player));
         }
+    }
+
+    /**
+     * Returns the material associated with the flag parameter
+     * @param player Player
+     * @param flag String (most cases will either be 'hand' or a specific material String)
+     * @return Material
+     * @throws ItemNotFoundException thrown when the Material cannot be found
+     */
+    public static Material selectMaterial(Player player, String flag) throws ItemNotFoundException, EmptyHandException {
+        Material material = null;
+
+        if (flag.equalsIgnoreCase("hand")) {    // select material in hand
+            material = player.getInventory().getItemInMainHand().getType();
+            if (material.equals(Material.AIR)) {
+                throw new EmptyHandException();
+            }
+        } else {
+            try {
+                material = Material.valueOf(flag.toUpperCase());    // select specific material
+            } catch (Exception e) {
+                throw new ItemNotFoundException();
+            }
+        }
+
+        return material;
     }
 
 }

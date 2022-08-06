@@ -33,6 +33,14 @@ public class PackratPlayer {
     }
 
     /**
+     * Returns the number of items on the player's blacklist
+     * @return int
+     */
+    public int getBlackListSize() {
+        return this.blacklist.size();
+    }
+
+    /**
      * Check if a material is on the player's blacklist
      * @param material Material
      * @return boolean

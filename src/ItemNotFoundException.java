@@ -7,7 +7,7 @@ package src;
 public class ItemNotFoundException extends Exception {
     
     public ItemNotFoundException() {
-        super("That item doesn't exist or you don't have an item selected.");
+        super("That item doesn't exist.");
     }
 
 }
