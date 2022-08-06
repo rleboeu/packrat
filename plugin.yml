@@ -7,5 +7,5 @@ description: This plugin allows players to choose which items they pickup.
 commands:
   packrat:
     description: Manage item pickup blacklist.
-    usage: /<command> [nopickup/pickup/clear] [item/hand]
+    usage: /<command> [nopickup/pickup/clear/show] [item/hand]
     default: true

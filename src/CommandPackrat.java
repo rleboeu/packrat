@@ -55,7 +55,7 @@ public class CommandPackrat implements CommandExecutor {
             // clear the blacklist of all materials
             packPlayer.clearBlacklist();
             player.sendMessage("You will now pick up all items as normal.");
-        } else if (args[0].equalsIgnoreCase("status")) {
+        } else if (args[0].equalsIgnoreCase("show")) {
             // show the player's current blacklist
             player.sendMessage("You are currently NOT picking up these blocks: ");
             player.sendMessage(packPlayer.getBlacklistString());
