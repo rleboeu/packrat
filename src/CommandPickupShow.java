@@ -18,7 +18,7 @@ public class CommandPickupShow implements CommandExecutor {
             PackratPlayer packPlayer = PackRat.getPackPlayer(player);
 
             if (player.getCanPickupItems() && packPlayer.getBlackListSize() > 0) {
-                player.sendMessage("Looting disabled for the following items:");
+                player.sendMessage("Looting is currently disabled for the following items:");
                 player.sendMessage(packPlayer.getBlacklistString());
             } else if (player.getCanPickupItems() && packPlayer.getBlackListSize() == 0) {
                 player.sendMessage("Looting is currently enabled for ALL items.");

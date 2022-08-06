@@ -35,7 +35,7 @@ public class CommandNoPickup implements CommandExecutor {
                 
                 if (material != null) {
                     packPlayer.addToBlacklist(material);
-                    player.sendMessage("Looting disabled for " + material.toString() + ".");
+                    player.sendMessage("Looting disabled for " + material.toString());
                 }
 
             } else {
