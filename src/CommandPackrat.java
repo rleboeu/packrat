@@ -59,6 +59,8 @@ public class CommandPackrat implements CommandExecutor {
             // show the player's current blacklist
             player.sendMessage("You are currently NOT picking up these blocks: ");
             player.sendMessage(packPlayer.getBlacklistString());
+        } else {
+            validUsage = false;
         }
         
         return validUsage;
@@ -76,6 +78,9 @@ public class CommandPackrat implements CommandExecutor {
 
         if (flag.equalsIgnoreCase("hand")) {    // select material in hand
             material = player.getInventory().getItemInMainHand().getType();
+            if (material.equals(Material.AIR)) {
+                throw new ItemNotFoundException();
+            }
         } else {
             try {
                 material = Material.valueOf(flag.toUpperCase());    // select specific material
