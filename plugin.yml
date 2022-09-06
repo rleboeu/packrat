@@ -7,10 +7,10 @@ description: This plugin allows players to choose which items they loot.
 commands:
   nopickup:
     description: Disable loooting for an item.
-    usage: /<command> [item:hand]
+    usage: /<command> [ITEM_NAME:hand]
   pickup:
     description: Enable looting for an item.
-    usage: /<command> [item:hand]
+    usage: /<command> [ITEM_NAME:hand]
   pickupall:
     description: Enables looting for all items.
     usage: /<command>
