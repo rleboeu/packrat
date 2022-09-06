@@ -17,13 +17,11 @@ public class CommandPickupAll implements CommandExecutor {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            PackratPlayer packPlayer = PackRat.getPackPlayer(player);
 
-            packPlayer.clearBlacklist();
+            PackratData.clearBlacklist(player.getName());
             player.setCanPickupItems(true);
 
             player.sendMessage("Looting enabled for all items.");
-
         }
 
         return isValidUsage;

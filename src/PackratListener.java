@@ -3,11 +3,11 @@ package src;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  * Event listener for the PackRat plugin
@@ -17,7 +17,12 @@ public class PackratListener implements Listener {
     
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        PackRat.registerPlayer(event.getPlayer());
+        PackratData.addPlayerToRegister(event.getPlayer().getName());
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        PackratData.removePlayerFromRegister(event.getPlayer().getName());
     }
 
     @EventHandler
@@ -26,10 +31,9 @@ public class PackratListener implements Listener {
 
         Entity parent = event.getEntity();
         if (parent.getType().equals(EntityType.PLAYER)) {
-            PackratPlayer player = PackRat.getPackPlayer((Player) parent);
             Material material = event.getItem().getItemStack().getType();
 
-            if (player.isMaterialBlacklisted(material)) {
+            if (PackratData.isMaterialBlacklisted(parent.getName(), material)) {
                 event.setCancelled(true);
             }
         }

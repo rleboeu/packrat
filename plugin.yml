@@ -1,5 +1,5 @@
-name: PackRat
-main: src.PackRat
+name: Packrat
+main: src.Packrat
 version: 1.0
 api-version: 1.19
 author: rleboeu

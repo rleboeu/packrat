@@ -15,16 +15,15 @@ public class CommandPickup implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         boolean isValidUsage = true;
-        
+
         if (sender instanceof Player) {
             Player player = (Player) sender;
             player.setCanPickupItems(true);
-            PackratPlayer packPlayer = PackRat.getPackPlayer(player);
 
             if ( args.length > 0 && !(args[0].isEmpty()) ) {
                 Material material = null;
                 try {
-                    material = PackRat.selectMaterial(player, args[0]);
+                    material = Packrat.selectMaterial(player, args[0]);
                 } catch (ItemNotFoundException infe) {
                     player.sendMessage(infe.getMessage());
                     isValidUsage = false;
@@ -34,7 +33,7 @@ public class CommandPickup implements CommandExecutor {
                 }
                 
                 if (material != null) {
-                    packPlayer.removeFromBlacklist(material);
+                    PackratData.removeMaterialFromBlacklist(player.getName(), material);
                     player.sendMessage("Looting enabled for " + material.toString());
                 }
 
