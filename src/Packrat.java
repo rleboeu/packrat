@@ -1,5 +1,6 @@
 package src;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,18 +15,23 @@ public class Packrat extends JavaPlugin {
     
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(new PackratListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PackratListener(), this);
 
         this.getCommand("nopickup").setExecutor(new CommandNoPickup());
         this.getCommand("pickup").setExecutor(new CommandPickup());
         this.getCommand("pickupall").setExecutor(new CommandPickupAll());
         this.getCommand("pickupnone").setExecutor(new CommandPickupNone());
         this.getCommand("pickupshow").setExecutor(new CommandPickupShow());
+
+        PackratData.createJSONFileIfAbsent();
     }
 
     @Override
     public void onDisable() {
-
+        // save all players currently present in the register
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            PackratData.savePlayerFromRegister(player.getName());
+        }
     }
 
     /**
