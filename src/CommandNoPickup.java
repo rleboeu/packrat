@@ -21,20 +21,26 @@ public class CommandNoPickup implements CommandExecutor {
             player.setCanPickupItems(true);
 
             if ( args.length > 0 && !(args[0].isEmpty()) ) {
-                Material material = null;
-                try {
-                    material = Packrat.selectMaterial(player, args[0]);
-                } catch (ItemNotFoundException infe) {
-                    player.sendMessage(infe.getMessage());
-                    isValidUsage = false;
-                } catch (EmptyHandException ehe) {
-                    player.sendMessage(ehe.getMessage());
-                    isValidUsage = false;
-                }
-                
-                if (material != null) {
-                    PackratData.addMaterialToBlacklist(player.getName(), material);
-                    player.sendMessage("Looting disabled for " + material.toString());
+
+                if (args[0].equalsIgnoreCase("all")) {
+                    player.setCanPickupItems(false);
+                    player.sendMessage("Looting disabled for ALL items.");
+                } else {
+                    Material material = null;
+                    try {
+                        material = PackratData.selectMaterial(player, args[0]);
+                    } catch (ItemNotFoundException infe) {
+                        player.sendMessage(infe.getMessage());
+                        isValidUsage = false;
+                    } catch (EmptyHandException ehe) {
+                        player.sendMessage(ehe.getMessage());
+                        isValidUsage = false;
+                    }
+                    
+                    if (material != null) {
+                        PackratData.addMaterialToBlacklist(player.getName(), material);
+                        player.sendMessage("Looting disabled for " + material.toString());
+                    }
                 }
 
             } else {

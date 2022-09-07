@@ -3,20 +3,11 @@ main: src.Packrat
 version: 1.0
 api-version: 1.19
 author: rleboeu
-description: This plugin allows players to choose which items they loot.
+description: Packrat allows players to choose which items they loot.
 commands:
   nopickup:
-    description: Disable loooting for an item.
-    usage: /<command> [ITEM_NAME:hand]
+    description: Disable looting for an item.
+    usage: /<command> [ITEM_NAME:hand:all]
   pickup:
-    description: Enable looting for an item.
-    usage: /<command> [ITEM_NAME:hand]
-  pickupall:
-    description: Enables looting for all items.
-    usage: /<command>
-  pickupnone:
-    description: Disables looting for all items.
-    usage: /<command>
-  pickupshow:
-    description: Shows current loot status.
-    usage: /<command>
+    description: Enable looting for an item, or list currently blocked pickups.
+    usage: /<command> [ITEM_NAME:hand:all:list]

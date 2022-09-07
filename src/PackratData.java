@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,6 +24,10 @@ public abstract class PackratData {
 
     private static JSONParser parser = new JSONParser();
 
+    /**
+     * Save player from the register into the JSON file
+     * @param playerName String
+     */
     public static void savePlayerFromRegister(String playerName) {
         JSONArray existingEntries = PackratData.createJSONArrayFrom(PackratDataConstants.FILEPATH);
         JSONObject newEntry = PackratData.convertToJSONObject(playerName);
@@ -61,6 +66,10 @@ public abstract class PackratData {
         register.remove(playerName);
     }
 
+    /**
+     * Load player from the JSON file into the register
+     * @param playerName String
+     */
     public static void loadPlayerIntoRegister(String playerName) {
         JSONArray existingEntries = PackratData.createJSONArrayFrom(PackratDataConstants.FILEPATH);
 
@@ -93,6 +102,11 @@ public abstract class PackratData {
 
     }
 
+    /**
+     * Create a JSONArray of all entries present in filepath
+     * @param filepath String path to json file
+     * @return JSONArray
+     */
     private static JSONArray createJSONArrayFrom(String filepath) {
         JSONArray array = new JSONArray();
 
@@ -107,6 +121,11 @@ public abstract class PackratData {
         return array;
     }
 
+    /**
+     * Convert the stored data in the register for a player into a JSONObject
+     * @param playerName String
+     * @return JSONObject
+     */
     private static JSONObject convertToJSONObject(String playerName) {
         HashMap<String, Object> map = new HashMap<String, Object>();
         JSONArray arr = new JSONArray();
@@ -122,6 +141,9 @@ public abstract class PackratData {
         return new JSONObject(map);
     }
 
+    /**
+     * Create the Packrat JSON file if it is not already present
+     */
     public static void createJSONFileIfAbsent() {
         try {
             File packratJson = new File(PackratDataConstants.FILEPATH);
@@ -129,6 +151,21 @@ public abstract class PackratData {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Check if a player is present in Packrat's register
+     * @param playerName String
+     * @return boolean
+     */
+    public static boolean isPlayerRegistered(String playerName) {
+        for (String key : register.keySet()) {
+            if (key.equals(playerName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -187,6 +224,33 @@ public abstract class PackratData {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Returns the material associated with the materialAsString parameter
+     * @param player Player
+     * @param materialAsString String (most cases will either be 'hand' or a specific material String)
+     * @return Material
+     * @throws ItemNotFoundException thrown when the Material cannot be found
+     * @throws EmptyHandException thrown when the player's hand is empty
+     */
+    public static Material selectMaterial(Player player, String materialAsString) throws ItemNotFoundException, EmptyHandException {
+        Material material = null;
+
+        if (materialAsString.equalsIgnoreCase("hand")) {    // select material in hand
+            material = player.getInventory().getItemInMainHand().getType();
+            if (material.equals(Material.AIR)) {
+                throw new EmptyHandException();
+            }
+        } else {
+            try {
+                material = Material.valueOf(materialAsString.toUpperCase());    // select specific material
+            } catch (Exception e) {
+                throw new ItemNotFoundException();
+            }
+        }
+
+        return material;
     }
 
 }

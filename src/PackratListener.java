@@ -33,7 +33,9 @@ public class PackratListener implements Listener {
         if (parent.getType().equals(EntityType.PLAYER)) {
             Material material = event.getItem().getItemStack().getType();
 
-            if (PackratData.isMaterialBlacklisted(parent.getName(), material)) {
+            if (!PackratData.isPlayerRegistered(parent.getName())) {
+                event.setCancelled(true);
+            } else if (PackratData.isMaterialBlacklisted(parent.getName(), material)) {
                 event.setCancelled(true);
             }
         }
