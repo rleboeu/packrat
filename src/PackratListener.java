@@ -17,12 +17,16 @@ public class PackratListener implements Listener {
     
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        PackratData.loadPlayerIntoRegister(event.getPlayer().getName());
+        new Thread(() -> {
+            PackratData.loadPlayerIntoRegister(event.getPlayer().getName());
+        }).start();
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        PackratData.savePlayerFromRegister(event.getPlayer().getName());
+        new Thread(() -> {
+            PackratData.savePlayerFromRegister(event.getPlayer().getName());
+        }).start();
     }
 
     @EventHandler
